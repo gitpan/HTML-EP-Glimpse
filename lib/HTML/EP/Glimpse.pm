@@ -28,7 +28,7 @@ use HTML::EP::Glimpse::Config ();
 
 package HTML::EP::Glimpse;
 
-$HTML::EP::Glimpse::VERSION = '0.04';
+$HTML::EP::Glimpse::VERSION = '0.05';
 @HTML::EP::Glimpse::ISA = qw(HTML::EP::Locale HTML::EP);
 
 
@@ -219,7 +219,7 @@ sub _ep_glimpse_search {
     my $debug = $self->{'debug'};
     my $start = ($cgi->param('start')  or  0);
     my $max = ($cgi->param('max')  or  $attr->{'max'}  or  20);
-    my @opts = ($prefs->{'glimpse_config'}->{'glimpse_path'}, '-UOnbqy', '-L',
+    my @opts = ($self->{'glimpse_config'}->{'glimpse_path'}, '-UOnbqy', '-L',
                 "0:" . ($start+$max), '-H', $vardir);
     my $case_sensitive = $cgi->param('opt_case_sensitive') ? 1 : 0;
     push(@opts, '-i') unless $case_sensitive;
