@@ -30,10 +30,10 @@ use Symbol ();
 
 package HTML::EP::Glimpse::Install;
 
-use vars qw(@EXPORT @ISA);
+use vars qw(@EXPORT @ISA $VERSION);
 @EXPORT = qw(Install Config);
 @ISA = qw(Exporter);
-
+$VERSION = '0.02';
 
 sub Install {
     require HTML::EP::Glimpse::Config;
@@ -70,7 +70,7 @@ sub PathOf {
 }
 
 sub new {
-    my $proto = shift;
+    my $proto = shift();
     my $file = shift() || "lib/HTML/EP/Glimpse/Config.pm";
     my $cfg = eval {
 	require HTML::EP::Glimpse::Config;
@@ -78,7 +78,9 @@ sub new {
     } || {};
     bless($cfg, (ref($proto) || $proto));
 
-    my $config = $main::config  ||  ! -f $file;
+    my $config = shift();
+    $config = (! -f $file ) unless defined $config;
+
     if ($config  ||  !defined($cfg->{'install_html_files'})) {
 	my $reply = ExtUtils::MakeMaker::prompt
 	    ("Install HTML files",
@@ -136,8 +138,9 @@ sub Config {
 	($proto, $file) = @_;
     } else {
 	($file) = @ARGV;
+	$proto = "HTML::EP::Glimpse::Install";
     }
-    my $self = shift->new($file);
+    my $self = $proto->new($file, 1);
     my $c = ref $self;
     ($c =~ s/Install$/Config/)
 	or die "Cannot handle class name $c: Must end with Install";

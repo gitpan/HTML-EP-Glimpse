@@ -4,7 +4,7 @@ use ExtUtils::MakeMaker ();
 use Getopt::Long ();
 
 use lib "lib";
-use vars qw($cfg $debug $config);
+use vars qw($cfg $debug);
 
 Getopt::Long::GetOptions('debug' => \$debug);
 
@@ -12,9 +12,8 @@ Getopt::Long::GetOptions('debug' => \$debug);
 # Make sure a Makefile is generated, so that the CPAN module
 # can detect dependencies
 eval {
-    $config = 1;
     require HTML::EP::Glimpse::Install;
-    $cfg = HTML::EP::Glimpse::Install->new();
+    $cfg = HTML::EP::Glimpse::Install->new(undef, 1);
     $cfg->Save("lib/HTML/EP/Glimpse/Config.pm");
 };
 my $status = $@;

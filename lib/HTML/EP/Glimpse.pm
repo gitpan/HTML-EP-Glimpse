@@ -28,7 +28,7 @@ use HTML::EP::Glimpse::Config ();
 
 package HTML::EP::Glimpse;
 
-$HTML::EP::Glimpse::VERSION = '0.02';
+$HTML::EP::Glimpse::VERSION = '0.03';
 @HTML::EP::Glimpse::ISA = qw(HTML::EP::Locale HTML::EP);
 
 
